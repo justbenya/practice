@@ -1,12 +1,21 @@
 package com.practice;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
-        new Main().insertionSort(new int[]{9, 2, 1, 5, 3});
+        Main go = new Main();
+        File file = new File();
+        file.load();
+
+        int[] array = file.getInputData();
+        int[] result = go.insertionSort(array);
+        System.out.println(Arrays.toString(result));
+        file.save(result);
     }
 
     public int[] insertionSort(int[] array) {
@@ -25,6 +34,8 @@ public class Main {
         }
         return array;
     }
+
+
 }
 
 
