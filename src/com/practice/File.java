@@ -4,27 +4,45 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class File {
-    private ArrayList<Integer> list = new ArrayList<>();
+    private ArrayList<Integer> listInt = new ArrayList<>();
+    private ArrayList<String> listStr = new ArrayList<>();
 
     private static final java.io.File INPUT_FILE = new java.io.File("in.txt");
     private static final java.io.File OUTPUT_FILE = new java.io.File("out.txt");
 
-    public ArrayList<Integer> getList() {
-        return list;
+    public ArrayList<Integer> getListInt() {
+        return listInt;
+    }
+
+    public ArrayList<String> getListStr() {
+        return listStr;
     }
 
     /**
      * Считываем информацию с файла.
-     * Помещаем её в list.
+     * Помещаем её в listInt.
      */
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(INPUT_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                this.list.add(Integer.valueOf(line));
+                if (isNumber(line)) {
+                    this.listInt.add(Integer.valueOf(line));
+                } else {
+                    this.listStr.add(line);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private boolean isNumber(String line) {
+        try {
+            Integer.parseInt(line);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
         }
     }
 
@@ -44,14 +62,38 @@ public class File {
     }
 
     /**
-     * Получаем из list'а целочиселенный массив.
+     * Получаем из listInt'а целочиселенный массив.
      * @return целочисленный массив который считали из файла.
      */
-    public int[] getInputData() {
-        int[] inputArray = new int[this.list.size()];
-        for (int i = 0; i < this.list.size(); i++) {
-            inputArray[i] = this.list.get(i);
+    public int[] getIntArray() {
+        int size = initSizeForArray();
+        int[] inputArray = new int[size];
+
+        for (Integer index : this.listInt) {
+            inputArray[index] = this.listInt.get(index);
         }
+
         return inputArray;
     }
+
+    /**
+     * Получаем массив из строк
+     * @return строчный массив который считали из файла.
+     */
+    public String[] getStrArray() {
+        int size = initSizeForArray();
+        String[] strings = new String[size];
+        return this.listStr.toArray(strings);
+    }
+
+    private int initSizeForArray() {
+        int size;
+        if (this.listInt.size() == 0) {
+            size = this.listStr.size();
+        } else {
+            size = this.listInt.size();
+        }
+        return size;
+    }
+
 }
