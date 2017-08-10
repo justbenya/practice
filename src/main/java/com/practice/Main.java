@@ -1,6 +1,5 @@
 package com.practice;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -10,10 +9,10 @@ public class Main {
         File file = new File();
         file.load();
         System.out.println(file.getListStr());
-        System.out.println(Arrays.toString(file.getInputDataString()));
-        System.out.println(Arrays.toString(go.insertionSort(file.getInputDataString())));
+        System.out.println(Arrays.toString(file.getStrArray()));
+        System.out.println(Arrays.toString(go.insertionSort(file.getStrArray())));
 
-//        int[] array = file.getInputData();
+//        int[] array = file.getIntArray();
 //        int[] result = go.insertionSort(array);
 //        System.out.println(Arrays.toString(result));
 //        file.save(result);
