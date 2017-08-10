@@ -69,10 +69,9 @@ public class File {
         int size = initSizeForArray();
         int[] inputArray = new int[size];
 
-        for (Integer index : this.listInt) {
-            inputArray[index] = this.listInt.get(index);
+        for (int i = 0; i < inputArray.length; i++) {
+            inputArray[i] = this.listInt.get(i);
         }
-
         return inputArray;
     }
 
