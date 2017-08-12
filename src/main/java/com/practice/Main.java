@@ -3,54 +3,69 @@ package com.practice;
 import java.util.Arrays;
 
 public class Main {
+    // TODO релизовать сохранение, написать тесты.
+
+    private Sort sort = new Sort();
+    private File file = new File();
+    private String[] sortingStrings;
+    private int[] sortingInt;
+
+    public void init(String[] args) {
+        if (args.length != 0) {
+            file.setInputFileName(args[0]);
+            file.setOutputFileName(args[1]);
+            if (args[0] != "" && args[1] != "") {
+                file.load();
+                typeOfContent(args);
+            }
+        } else {
+            System.out.println("Введите правило запуска");
+        }
+
+    }
+
+    public void typeOfContent(String[] args) {
+        if (args[2].equals("-i")) {
+            sortingModeInt(args);
+        } else if (args[2].equals("-s")) {
+            sortingModeStr(args);
+        } else {
+            System.out.println("Не верная команда!");
+        }
+    }
+
+    private void sortingModeInt(String[] args) {
+        if (args[3].equals("-a")) {
+            this.sortingInt = sort.insertionSortIncrease(file.getIntArray());
+        } else if (args[3].equals("-d")) {
+            this.sortingInt = sort.insertionSortDecrease(file.getIntArray());
+        } else {
+            System.out.println("Не верная команда!");
+        }
+
+    }
+
+    private void sortingModeStr(String[] args) {
+        if (args[3].equals("-a")) {
+            this.sortingStrings = sort.insertionSortIncrease(file.getStrArray());
+        } else if (args[3].equals("-d")) {
+            this.sortingStrings = sort.insertionSortDecrease(file.getStrArray());
+        }
+    }
+
+    public int[] getSortingInt() {
+        return sortingInt;
+    }
+
+    public String[] getSortingStrings() {
+        return sortingStrings;
+    }
 
     public static void main(String[] args) {
-        Main go = new Main();
-        File file = new File();
-        file.load();
-        System.out.println(file.getListStr());
-        System.out.println(Arrays.toString(file.getStrArray()));
-        System.out.println(Arrays.toString(go.insertionSort(file.getStrArray())));
 
-//        int[] array = file.getIntArray();
-//        int[] result = go.insertionSort(array);
-//        System.out.println(Arrays.toString(result));
-//        file.save(result);
     }
 
-    public int[] insertionSort(int[] array) {
-        for (int i = 1; i < array.length; i++) {
-            int j;
-            int buf = array[i];
 
-            for (j = i - 1; j >= 0; j--) {
-                if (array[j] < buf) {
-                    break;
-                }
-                array[j + 1] = array[j];
-            }
-
-            array[j + 1] = buf;
-        }
-        return array;
-    }
-
-    public String[] insertionSort(String[] array) {
-        for (int i = 1; i < array.length; i++) {
-            int j;
-            String buf = array[i];
-
-            for (j = i - 1; j >= 0; j--) {
-                if (array[j].compareTo(buf) < 0) {
-                    break;
-                }
-                array[j + 1] = array[j];
-            }
-
-            array[j + 1] = buf;
-        }
-        return array;
-    }
 
 }
 
