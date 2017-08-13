@@ -11,11 +11,11 @@ public class FileTest {
     public void getIntArray() throws Exception {
     }
 
-    @Test
-    public void loadTest() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void loadTest() throws NullPointerException {
         // АБ, А, ААВ, Б, ААА, ААБ, АА in.txt
         File file = new File();
-
+        file.setInputFileName("in.txt");
         file.load();
 
         assertEquals("[АБ, А, ААВ, Б, ААА, ААБ, АА]",
@@ -26,7 +26,9 @@ public class FileTest {
     public void loadIntegerFile() throws Exception {
         // 323, 4678, 9, 234, 12, 15 in.txt
         File file = new File();
+        file.setInputFileName("in.txt");
         file.load();
+
         assertEquals("[323, 4678, 9, 234, 12, 15]",
                 Arrays.toString(file.getIntArray()));
     }
