@@ -33,7 +33,7 @@ public class File {
      * Помещаем её в listInt.
      */
     public void load() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.inputFileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (isNumber(line)) {
@@ -62,9 +62,20 @@ public class File {
      * @param out массив который мы записываем в файл.
      */
     public void save(int[] out) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.outputFileName))) {
             for (int i = 0; i < out.length; i++) {
                 writer.write(String.valueOf(out[i]));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save(String[] out) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.outputFileName))) {
+            for (int i = 0; i < out.length; i++) {
+                writer.write(out[i]);
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -77,7 +88,13 @@ public class File {
      * @return целочисленный массив который считали из файла.
      */
     public int[] getIntArray() {
-        int size = initSizeForArray();
+        if (this.listInt.isEmpty()) {
+            throw new NullPointerException("Выбран не верный параметр, " +
+                    "файл содержит строки. " +
+                    "Выберете -i -a (для целых чисел по возрастанию), либо " +
+                    "выберете -i -d (для целых чисел по убыванию)");
+        }
+        int size = this.listInt.size();
         int[] inputArray = new int[size];
 
         for (int i = 0; i < inputArray.length; i++) {
@@ -91,19 +108,15 @@ public class File {
      * @return строчный массив который считали из файла.
      */
     public String[] getStrArray() {
-        int size = initSizeForArray();
+        if (this.listStr.isEmpty()) {
+            throw new NullPointerException("Выбран не верный параметр, " +
+                    "файл содержит целые числа. " +
+                    "Выберете -s -a (для строк по возрастанию), либо " +
+                    "выберете -s -d (для строк по убыванию)");
+        }
+        int size = this.listStr.size();
         String[] strings = new String[size];
         return this.listStr.toArray(strings);
-    }
-
-    private int initSizeForArray() {
-        int size;
-        if (this.listInt.size() == 0) {
-            size = this.listStr.size();
-        } else {
-            size = this.listInt.size();
-        }
-        return size;
     }
 
 }
