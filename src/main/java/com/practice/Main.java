@@ -3,12 +3,14 @@ package com.practice;
 import java.util.Arrays;
 
 public class Main {
-    // TODO релизовать сохранение, написать тесты.
 
-    private Sort sort = new Sort();
-    private File file = new File();
-    private String[] sortingStrings;
-    private int[] sortingInt;
+    private final Sort sort;
+    private final File file;
+
+    public Main() {
+        this.sort = new Sort();
+        this.file = new File();
+    }
 
     public void init(String[] args) {
         if (args.length != 0) {
@@ -19,12 +21,15 @@ public class Main {
                 typeOfContent(args);
             }
         } else {
-            System.out.println("Введите правило запуска");
+            System.out.println("Введите правило запуска:\n" +
+                    "in.txt out.txt -i -a (для целых чисел по возрастанию)\n" +
+                    "in.txt out.txt -i -d (для целых чисел по убыванию)\n" +
+                    "in.txt out.txt -s -a (для строк по возрастанию)\n" +
+                    "in.txt out.txt -s -a (для строк по убыванию)");
         }
-
     }
 
-    public void typeOfContent(String[] args) {
+    private void typeOfContent(String[] args) {
         if (args[2].equals("-i")) {
             sortingModeInt(args);
         } else if (args[2].equals("-s")) {
@@ -36,36 +41,28 @@ public class Main {
 
     private void sortingModeInt(String[] args) {
         if (args[3].equals("-a")) {
-            this.sortingInt = sort.insertionSortIncrease(file.getIntArray());
+            file.save(sort.insertionSortIncrease(file.getIntArray()));
         } else if (args[3].equals("-d")) {
-            this.sortingInt = sort.insertionSortDecrease(file.getIntArray());
+            file.save(sort.insertionSortDecrease(file.getIntArray()));
         } else {
             System.out.println("Не верная команда!");
         }
-
     }
 
     private void sortingModeStr(String[] args) {
         if (args[3].equals("-a")) {
-            this.sortingStrings = sort.insertionSortIncrease(file.getStrArray());
+            file.save(sort.insertionSortIncrease(file.getStrArray()));
         } else if (args[3].equals("-d")) {
-            this.sortingStrings = sort.insertionSortDecrease(file.getStrArray());
+            file.save(sort.insertionSortDecrease(file.getStrArray()));
+        } else {
+            System.out.println("Не верная команда!");
         }
     }
 
-    public int[] getSortingInt() {
-        return sortingInt;
-    }
-
-    public String[] getSortingStrings() {
-        return sortingStrings;
-    }
-
     public static void main(String[] args) {
-
+        Main main = new Main();
+        main.init(args);
     }
-
-
 
 }
 
