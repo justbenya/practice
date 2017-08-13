@@ -89,7 +89,7 @@ public class File {
      */
     public int[] getIntArray() {
         if (this.listInt.isEmpty()) {
-            throw new NullPointerException("Выбран не верный параметр, " +
+            throw new NullPointerException("\nВыбран не верный параметр, " +
                     "файл содержит строки. " +
                     "Выберете -i -a (для целых чисел по возрастанию), либо " +
                     "выберете -i -d (для целых чисел по убыванию)");
@@ -109,7 +109,7 @@ public class File {
      */
     public String[] getStrArray() {
         if (this.listStr.isEmpty()) {
-            throw new NullPointerException("Выбран не верный параметр, " +
+            throw new NullPointerException("\nВыбран не верный параметр, " +
                     "файл содержит целые числа. " +
                     "Выберете -s -a (для строк по возрастанию), либо " +
                     "выберете -s -d (для строк по убыванию)");
